@@ -20,7 +20,7 @@ spring:
 
   devtools:
     restart:
-      enabled: false
+      enabled: true
   servlet:
     multipart:
       max-file-size: -1
