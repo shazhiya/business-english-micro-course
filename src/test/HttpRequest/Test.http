@@ -1,5 +1,5 @@
 # post test
-POST http://localhost:9090/curriculum/all
+POST http://localhost:9090/curriculum/search/0/10
 Content-Type: application/json
 
 {

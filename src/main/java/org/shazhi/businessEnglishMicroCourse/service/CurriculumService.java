@@ -10,4 +10,5 @@ public interface CurriculumService {
 
     List<CurriculumEntity> getAll();
 
+    List<CurriculumEntity> search(CurriculumEntity curriculumEntity, Integer start, Integer size);
 }

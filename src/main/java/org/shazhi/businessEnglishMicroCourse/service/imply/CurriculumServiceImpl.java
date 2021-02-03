@@ -3,6 +3,7 @@ package org.shazhi.businessEnglishMicroCourse.service.imply;
 import org.shazhi.businessEnglishMicroCourse.entity.CurriculumEntity;
 import org.shazhi.businessEnglishMicroCourse.repository.CurriculumRepository;
 import org.shazhi.businessEnglishMicroCourse.service.CurriculumService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +30,10 @@ public class CurriculumServiceImpl implements CurriculumService {
     @Override
     public List<CurriculumEntity> getAll() {
         return curriculumRepository.findAll();
+    }
+
+    @Override
+    public List<CurriculumEntity> search(CurriculumEntity curriculumEntity, Integer start, Integer size) {
+        return curriculumRepository.findAll(PageRequest.of(start,size)).getContent();
     }
 }
