@@ -32,8 +32,8 @@ public class CurriculumController {
         return curriculumService.getAll();
     }
 
-    @RequestMapping("search/{start}/{size}")
-    public List<CurriculumEntity> search(@RequestBody CurriculumEntity curriculumEntity, @PathVariable("start") Integer start, @PathVariable("size") Integer size) {
-        return curriculumService.search(curriculumEntity, start, size);
+    @RequestMapping("search/{type}/{start}/{size}")
+    public List<CurriculumEntity> search(@RequestBody CurriculumEntity curriculumEntity, @PathVariable String type, @PathVariable("start") Integer start, @PathVariable("size") Integer size) {
+        return curriculumService.search(curriculumEntity, type,start, size);
     }
 }

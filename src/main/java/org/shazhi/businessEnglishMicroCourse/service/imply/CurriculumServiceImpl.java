@@ -33,7 +33,7 @@ public class CurriculumServiceImpl implements CurriculumService {
     }
 
     @Override
-    public List<CurriculumEntity> search(CurriculumEntity curriculumEntity, Integer start, Integer size) {
+    public List<CurriculumEntity> search(CurriculumEntity curriculumEntity, String type, Integer start, Integer size) {
         return curriculumRepository.findAll(PageRequest.of(start,size)).getContent();
     }
 }
