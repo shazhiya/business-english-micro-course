@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CurriculumController {
     }
 
     @RequestMapping("search/{type}/{start}/{size}")
-    public List<CurriculumEntity> search(@RequestBody CurriculumEntity curriculumEntity, @PathVariable String type, @PathVariable("start") Integer start, @PathVariable("size") Integer size) {
+    public List<CurriculumEntity> search(HttpSession session ,@RequestBody CurriculumEntity curriculumEntity, @PathVariable String type, @PathVariable("start") Integer start, @PathVariable("size") Integer size) {
         return curriculumService.search(curriculumEntity, type,start, size);
     }
 }

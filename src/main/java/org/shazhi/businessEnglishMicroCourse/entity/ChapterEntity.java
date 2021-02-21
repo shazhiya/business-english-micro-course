@@ -15,8 +15,7 @@ public class ChapterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer chapterId;
-    @Column(name = "chapter_name")
-    private String chaptername;
+    private String chapterName; // elementUI - bug 
     private String chapterCode;
     private String chapterDescription;
 

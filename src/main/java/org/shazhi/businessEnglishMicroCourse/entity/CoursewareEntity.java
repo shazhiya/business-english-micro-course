@@ -18,6 +18,11 @@ public class CoursewareEntity {
     private String coursewareDescription;
     private String coursewareName;
     private String coursewarePath;
+    private String md5;
+    private String md5Salted;
+    private Long totalSize;
+    private Integer fragmentNbr;
+    private Long fragmentSize;
 
     @OneToMany(mappedBy = "courseware")
     private List<BulletScreenEntity> bulletScreens;
