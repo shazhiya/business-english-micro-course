@@ -4,11 +4,11 @@ import org.shazhi.businessEnglishMicroCourse.addition.Email;
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.service.UserService;
 import org.springframework.data.repository.query.Param;
-import org.springframework.session.Session;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -31,9 +31,40 @@ public class UserController {
         return userService.findAll();
     }
 
+    /*
+        0: params is not complete
+        1:  success
+        -1: verify code is error
+        -2: email is not available
+        -3 user is not available
+        -4 system error
+     */
     @RequestMapping("register")
-    public Integer register(@RequestBody UserEntity registerUser) {
-        return userService.register(registerUser);
+    public Integer register(@RequestBody UserEntity registerUser,HttpSession session) {
+
+        if (registerUser.getUserName()==null|| registerUser.getPassword()==null|| registerUser.getUserEmail()==null){
+            return 0;
+        }
+
+        String verifyCode = (String) session.getAttribute("verifyCode");
+        if (verifyCode==null || !verifyCode.equals(registerUser.getUserEmail())){
+            return -1;
+        }
+        String email = (String) session.getAttribute("currentEmail");
+        if (!userService.validateEmailAvailable(email)) {
+            return -2;
+        }
+        if (!userService.validateUserNameAvailable(registerUser.getUserName())){
+            return -3;
+        }
+
+        try {
+            registerUser.setUserEmail(email);
+            return userService.register(registerUser);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -4;
+        }
     }
 
     @RequestMapping("user/querySecuritiesByUsername")
@@ -52,7 +83,7 @@ public class UserController {
     }
 
     @RequestMapping("auth/giveVerifyCode")
-    public Boolean giveVerifyCode(@Param("email") String email, Session session) {
+    public Boolean giveVerifyCode(@Param("email") String email, HttpSession session) {
         Timer timer = new Timer();
         session.setAttribute("currentEmail",email);
         String vc = generateVerifyCode();
@@ -60,7 +91,7 @@ public class UserController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (session!=null&&!session.isExpired()&&session.getAttribute("verifyCode")!=null&&session.getAttribute("verifyCode")!=""){
+                if (session!=null&&session.getAttribute("verifyCode")!=null&&session.getAttribute("verifyCode")!=""){
                     session.removeAttribute("verifyCode");
                 }
             }

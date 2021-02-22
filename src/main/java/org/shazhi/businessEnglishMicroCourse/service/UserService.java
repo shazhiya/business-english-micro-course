@@ -14,4 +14,8 @@ public interface UserService {
     Map<String, Object> querySecuritiesByUsername(UserEntity user);
 
     UserEntity getProfileByUsername(UserEntity user);
+
+    Boolean validateEmailAvailable(String email);
+
+    Boolean validateUserNameAvailable(String username);
 }

@@ -62,4 +62,15 @@ public class UserServiceImpl implements UserService {
         if (user==null) user = new UserEntity();
         return UserEntity.ignoreAttr(user);
     }
+
+    @Override
+    public Boolean validateEmailAvailable(String email) {
+        return userRepository.findUserEntitiesByUserEmail(email).size() == 0;
+    }
+
+    @Override
+    public Boolean validateUserNameAvailable(String username) {
+        return userRepository.findUserEntitiesByUserName(username).size() == 0;
+    }
+
 }

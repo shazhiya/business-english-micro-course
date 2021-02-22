@@ -21,10 +21,11 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+    @Column(unique = true)
     private String userName;
     private String password;
+    @Column(unique = true)
     private String userEmail;
-    @Column
     private String userHeadico;
     @CreationTimestamp
     private Date userRegisterdate;

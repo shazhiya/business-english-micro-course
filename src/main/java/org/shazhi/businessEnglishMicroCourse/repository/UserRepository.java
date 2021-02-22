@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer>, JpaSpecificationExecutor<UserEntity>, Serializable {
@@ -14,5 +15,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer>, JpaS
 
     @Query("select user from UserEntity user where user.userName = :username")
     UserEntity getProfileByUsername(@Param("username") String username);
+
+    List<UserEntity> findUserEntitiesByUserEmail(String userEmail);
+
+    List<UserEntity> findUserEntitiesByUserName(String userName);
 
 }
