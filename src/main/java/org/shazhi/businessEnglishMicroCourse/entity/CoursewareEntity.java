@@ -18,6 +18,7 @@ public class CoursewareEntity {
     private String coursewareDescription;
     private String coursewareName;
     private String coursewarePath;
+    private String filetype;
     private String md5;
     private String md5Salted;
     private Long totalSize;
@@ -33,10 +34,6 @@ public class CoursewareEntity {
     @ManyToOne
     @JoinColumn(name = "chapter_id")
     private ChapterEntity chapter;
-
-    @ManyToOne
-    @JoinColumn(name = "filetype_id")
-    private FiletypeEntity filetype;
 
     @OneToMany(mappedBy = "courseware")
     private List<ProgressEntity> progresses;

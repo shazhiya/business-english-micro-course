@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getProfileByUsername(UserEntity user) {
         user = userRepository.getProfileByUsername(user.getUserName());
+        if (user==null) user = new UserEntity();
         return UserEntity.ignoreAttr(user);
     }
 }
