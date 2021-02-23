@@ -18,4 +18,8 @@ public interface UserService {
     Boolean validateEmailAvailable(String email);
 
     Boolean validateUserNameAvailable(String username);
+
+    UserEntity findUserByUserEmail(String email);
+
+    void update(UserEntity userEntity);
 }

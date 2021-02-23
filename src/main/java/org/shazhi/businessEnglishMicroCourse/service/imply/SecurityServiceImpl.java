@@ -5,11 +5,13 @@ import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.repository.SecurityRepository;
 import org.shazhi.businessEnglishMicroCourse.service.SecurityService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class SecurityServiceImpl implements SecurityService {
     final
     SecurityRepository securityRepository;

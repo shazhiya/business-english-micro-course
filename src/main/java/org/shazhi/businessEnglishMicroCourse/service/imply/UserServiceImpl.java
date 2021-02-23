@@ -6,12 +6,15 @@ import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.repository.UserRepository;
 import org.shazhi.businessEnglishMicroCourse.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     final UserRepository userRepository;
@@ -71,6 +74,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean validateUserNameAvailable(String username) {
         return userRepository.findUserEntitiesByUserName(username).size() == 0;
+    }
+
+    @Override
+    public UserEntity findUserByUserEmail(String email) {
+        return userRepository.findOne(Example.of(new UserEntity().setUserEmail(email))).get();
+    }
+
+    @Override
+    public void update(UserEntity userEntity) {
+        userRepository.saveAndFlush(userEntity);
     }
 
 }

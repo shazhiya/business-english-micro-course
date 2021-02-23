@@ -4,6 +4,7 @@ import org.shazhi.businessEnglishMicroCourse.addition.Email;
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.service.UserService;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,8 +83,8 @@ public class UserController {
         return new UserEntity().setUserHeadico(userService.getProfileByUsername(user).getUserHeadico());
     }
 
-    @RequestMapping("auth/giveVerifyCode")
-    public Boolean giveVerifyCode(@Param("email") String email, HttpSession session) {
+    @RequestMapping("auth/giveVerifyCode/{type}")
+    public Boolean giveVerifyCode(@Param("email") String email, HttpSession session, @PathVariable String type) {
         Timer timer = new Timer();
         session.setAttribute("currentEmail",email);
         String vc = generateVerifyCode();
@@ -91,12 +92,53 @@ public class UserController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (session!=null&&session.getAttribute("verifyCode")!=null&&session.getAttribute("verifyCode")!=""){
+                if (session!=null&&session.getAttribute("verifyCode")!=null){
                     session.removeAttribute("verifyCode");
                 }
             }
-        },60*1000);
-        return emailService.sendEmail(email,"您的验证码为： " + vc + "\n 若操作非本人所为，请忽略该信息。","注册验证码");
+        },60*1000*5);
+        String content, title;
+        if (type.equals("register")){
+            title = "注册验证码";
+        }else{
+            title = "重置密码";
+        }
+        content = "您的验证码为： " + vc + "\n 若操作非本人所为，请忽略该信息。";
+        return emailService.sendEmail(email,content,title);
+    }
+
+    /*
+        0: 服务器异常
+        -1: 参数缺失
+        -2: 验证码错误
+        -3: 邮箱未绑定
+    */
+    @RequestMapping("auth/resetPassword")
+    public Integer resetPassword(@RequestBody UserEntity userEntity, HttpSession session){
+        if (userEntity.getPassword()==null|| userEntity.getPassword().length()<6||userEntity.getUserEmail()==null){
+            return -1;
+        }
+
+        String email = (String) session.getAttribute("currentEmail");
+        String verifyCode = (String) session.getAttribute("verifyCode");
+        if (!userEntity.getUserEmail().equals(verifyCode)){
+            return -2;
+        }
+        if (userService.validateEmailAvailable(email)){
+            return -3;
+        }
+
+        try{
+            UserEntity resetUser = userService.findUserByUserEmail(email);
+            if (resetUser==null) return 0;
+            resetUser.setPassword(userEntity.getPassword());
+            userService.update(userEntity);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
+
+
     }
 
     private String generateVerifyCode(){

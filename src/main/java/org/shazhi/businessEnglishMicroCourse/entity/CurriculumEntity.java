@@ -16,6 +16,7 @@ public class CurriculumEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer curriculumId;
     private String curriculumName;
+    private String curriculumStatus;
     private String curriculumDescription;
     private String curriculumCover;
 

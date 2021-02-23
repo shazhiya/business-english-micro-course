@@ -4,13 +4,13 @@ import org.shazhi.businessEnglishMicroCourse.entity.CoursewareEntity;
 import org.shazhi.businessEnglishMicroCourse.repository.FileRepository;
 import org.shazhi.businessEnglishMicroCourse.service.FileService;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class FileServiceImpl implements FileService {
     final FileRepository fileRepository;
 

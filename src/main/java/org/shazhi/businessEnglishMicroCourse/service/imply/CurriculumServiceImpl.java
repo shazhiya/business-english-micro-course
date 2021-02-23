@@ -5,10 +5,12 @@ import org.shazhi.businessEnglishMicroCourse.repository.CurriculumRepository;
 import org.shazhi.businessEnglishMicroCourse.service.CurriculumService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class CurriculumServiceImpl implements CurriculumService {
     final
     CurriculumRepository curriculumRepository;
@@ -24,7 +26,7 @@ public class CurriculumServiceImpl implements CurriculumService {
                 ware.setChapter(chapter);
             });
         });
-        return curriculumRepository.save(curriculum).getCurriculumId() > -1;
+        return curriculumRepository.saveAndFlush(curriculum).getCurriculumId() > -1;
     }
 
     @Override

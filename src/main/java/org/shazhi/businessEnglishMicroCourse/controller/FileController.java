@@ -35,7 +35,7 @@ public class FileController {
     public Object uploadFile(@Param("file") MultipartFile file, @PathVariable String type) {
         if (file.isEmpty()) return false;
         String fileName = "hashcode"+'_' + file.getOriginalFilename();
-        String hashPath =  '\\' + type  + "\\"+"hash" +  '\\' ;
+        String hashPath =  '\\' + type  + "\\"+"hash" +  '\\' + file.getOriginalFilename().split(".part.")[0] +'\\'  ;
         File fullPath = new File(path+hashPath);
         if (!fullPath.exists()) fullPath.mkdir();
         try {
@@ -47,11 +47,12 @@ public class FileController {
         }
     }
 
+    /*
     @RequestMapping("file/save/coursewareInfo")
     public Object saveCoursewareInfo(@RequestBody CoursewareEntity courseware){
         // TODO: 2021/2/19
         return true;
-    }
+    }*/
 
     @RequestMapping("file/validateMd5")
     public Boolean validateMd5(@RequestBody CoursewareEntity courseware){

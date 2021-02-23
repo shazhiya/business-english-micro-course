@@ -23,8 +23,13 @@ public class CurriculumController {
         this.curriculumService = curriculumService;
     }
 
-    @RequestMapping("create")
-    public Boolean create(@RequestBody CurriculumEntity curriculum) {
+    @RequestMapping("create/{type}")
+    public Boolean create(@RequestBody CurriculumEntity curriculum, @PathVariable String type) {
+        if (type.equals("savaTemporarily")||type.equals("audited")){
+            curriculum.setCurriculumStatus(type);
+        }else {
+            return false;
+        }
         return curriculumService.createCurriculum(curriculum);
     }
 
