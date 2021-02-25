@@ -23,4 +23,9 @@ public class FileServiceImpl implements FileService {
         Example<CoursewareEntity> queryCondition = Example.of(example);
         return fileRepository.findAll(queryCondition);
     }
+
+    @Override
+    public CoursewareEntity findCoursewareById(Integer id) {
+        return fileRepository.findById(id).get();
+    }
 }

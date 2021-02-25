@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface FileService {
     List<CoursewareEntity> findCourseware(CoursewareEntity example);
+    CoursewareEntity findCoursewareById(Integer id);
 }
