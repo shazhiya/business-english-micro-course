@@ -24,11 +24,11 @@ public class NoteEntity {
     @Convert(converter = JpaConverterJson.class)
     private Object noteDescription;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id")
     private CurriculumEntity curriculum;
 }

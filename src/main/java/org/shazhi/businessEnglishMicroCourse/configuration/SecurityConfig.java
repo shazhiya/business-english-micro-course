@@ -2,6 +2,7 @@ package org.shazhi.businessEnglishMicroCourse.configuration;
 
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.repository.UserRepository;
+import org.shazhi.businessEnglishMicroCourse.util.IdUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,22 +11,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -76,9 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 try {
                     ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     userEntity.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRoleName())));
-                    return new User(userName, userEntity.getPassword(), userEntity.getUserEnable(), true, true, true, authorities);
+                    return new IdUser(userName, userEntity.getPassword(), userEntity.getUserEnable(), true, true, true, authorities).setUserId(userEntity.getUserId());
                 } catch (Exception e) {
-                    return new User(userName, null, false, false, false, false, null);
+                    return new IdUser(userName, null, false, false, false, false, null);
                 }
             }
         };

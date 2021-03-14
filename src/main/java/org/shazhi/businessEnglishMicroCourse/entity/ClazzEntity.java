@@ -18,15 +18,15 @@ public class ClazzEntity {
     private String clazzName;
     private Integer clazzDescription;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "batch_id")
     private BatchEntity batch;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id")
     private CurriculumEntity curriculum;
 
-    @OneToMany(mappedBy = "clazz")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clazz")
     private List<ClazzUserEntity> clazzUsers;
 
 

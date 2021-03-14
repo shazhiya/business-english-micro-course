@@ -19,11 +19,11 @@ public class ChapterEntity {
     private String chapterCode;
     private String chapterDescription;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id")
     private CurriculumEntity curriculum;
 
-    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chapter", cascade = CascadeType.ALL)
     private List<CoursewareEntity> coursewares;
 
 }

@@ -19,6 +19,6 @@ public class CommentTypeEntity {
     @Column(name = "commenttype_name")
     private String commentTypeName;
 
-    @OneToMany(mappedBy = "commentType")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "commentType")
     private List<CommentEntity> comments;
 }

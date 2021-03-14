@@ -25,17 +25,17 @@ public class CoursewareEntity {
     private Integer fragmentNbr;
     private Long fragmentSize;
 
-    @OneToMany(mappedBy = "courseware")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseware")
     private List<BulletScreenEntity> bulletScreens;
 
-    @OneToMany(mappedBy = "courseware")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseware")
     private List<CommentEntity> comments;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "chapter_id")
     private ChapterEntity chapter;
 
-    @OneToMany(mappedBy = "courseware")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseware")
     private List<ProgressEntity> progresses;
 
 

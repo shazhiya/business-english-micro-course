@@ -23,11 +23,11 @@ public class MessageEntity {
     @Column(name = "message_readtime")
     private Timestamp messageReadTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "target_id")
     private UserEntity targetUser;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "send_id")
     private UserEntity sendUser;
 }

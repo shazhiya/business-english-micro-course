@@ -20,17 +20,17 @@ public class CurriculumEntity {
     private String curriculumDescription;
     private String curriculumCover;
 
-    @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum", cascade = CascadeType.ALL)
     private List<ChapterEntity> chapters;
 
-    @OneToMany(mappedBy = "curriculum")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum")
     private List<ClazzEntity> clazzes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "curriculum")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum")
     private List<NoteEntity> notes;
 
 }

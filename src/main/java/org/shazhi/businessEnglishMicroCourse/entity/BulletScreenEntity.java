@@ -28,11 +28,11 @@ public class BulletScreenEntity {
     @Column(name = "bulletscreen_content")
     private String bulletScreenContent;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseware_id")
     private CoursewareEntity courseware;
 }

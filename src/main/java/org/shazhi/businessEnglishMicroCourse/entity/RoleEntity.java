@@ -26,6 +26,10 @@ public class RoleEntity {
     @JsonIgnore
     private List<UserEntity> users;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id")
+    private OrganizationEntity organization;
+
     public static RoleEntity ignoreAttr(RoleEntity role) {
         return new RoleEntity()
                 .setRoleId(role.getRoleId())

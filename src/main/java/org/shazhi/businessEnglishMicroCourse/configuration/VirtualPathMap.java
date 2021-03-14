@@ -16,5 +16,6 @@ public class VirtualPathMap implements WebMvcConfigurer {
         registry.addResourceHandler("/headIco/**").addResourceLocations("file:" + path + "headIco/");
         registry.addResourceHandler("/courseCover/**").addResourceLocations("file:" + path + "courseCover/");
         registry.addResourceHandler("/courseware/**").addResourceLocations("file:" + path + "courseware/");
+        registry.addResourceHandler("/auditedData/**").addResourceLocations("file:" + path + "auditedData/");
     }
 }

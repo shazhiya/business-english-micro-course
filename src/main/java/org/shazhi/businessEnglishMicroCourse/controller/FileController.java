@@ -3,6 +3,7 @@ package org.shazhi.businessEnglishMicroCourse.controller;
 import org.apache.catalina.connector.ClientAbortException;
 import org.shazhi.businessEnglishMicroCourse.entity.CoursewareEntity;
 import org.shazhi.businessEnglishMicroCourse.service.FileService;
+import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 @RestController
 public class FileController {
@@ -33,6 +35,18 @@ public class FileController {
 
     @RequestMapping("file/{type}/upload")
     public Object uploadFile(@Param("file") MultipartFile file, @PathVariable String type) {
+
+        if (!"courseware".equals(type)){
+            String savePath = type + "/"+ new Date().getTime() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            try {
+                file.transferTo(new File(path + "/" +  savePath));
+                return new Result().setSuccess(savePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new Result().setMsg("内部异常，请稍后重试" + e.toString());
+            }
+        }
+
         if (file.isEmpty()) return false;
         String fileName = "hashcode" + '_' + file.getOriginalFilename();
         String hashPath = '\\' + type + '\\' + file.getOriginalFilename().split(".part.")[0] + '\\';

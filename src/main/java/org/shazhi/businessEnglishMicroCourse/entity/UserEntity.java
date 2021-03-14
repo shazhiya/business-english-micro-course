@@ -34,25 +34,25 @@ public class UserEntity {
     @ColumnDefault("true")
     private Boolean userEnable;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<BulletScreenEntity> bulletScreens;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<ClazzUserEntity> enrollClazzies;
 
-    @OneToMany(mappedBy = "commenter")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "commenter")
     private List<CommentEntity> comments;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<CurriculumEntity> curriculums;
 
-    @OneToMany(mappedBy = "sendUser")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sendUser")
     private List<MessageEntity> sendMessages;
 
-    @OneToMany(mappedBy = "targetUser")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "targetUser")
     private List<MessageEntity> acceptMessages;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<NoteEntity> notes;
 
     @ManyToMany
@@ -60,6 +60,9 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<RoleEntity> roles;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
+    private List<OrganizationEntity> organizations;
 
     public static UserEntity ignoreAttr(UserEntity user) {
         return new UserEntity()
@@ -72,6 +75,7 @@ public class UserEntity {
                 .setUserRegisterdate(user.getUserRegisterdate())
                 .setUserTelephone(user.getUserTelephone())
                 .setUserHeadico(user.getUserHeadico())
+                .setOrganizations(user.getOrganizations())
                 .setRoles(user.getRoles()
                         .stream().map(role -> new RoleEntity().setRoleId(role.getRoleId()).setRoleName(role.getRoleName())).collect(Collectors.toList()));
     }

@@ -16,15 +16,15 @@ public class ClazzUserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer clazzUserId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "clazz_id")
     private ClazzEntity clazz;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "clazzUser")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clazzUser")
     private List<ProgressEntity> progresses;
 
 }
