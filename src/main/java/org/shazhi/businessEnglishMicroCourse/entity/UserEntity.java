@@ -1,10 +1,13 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SelectBeforeUpdate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,10 +15,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "user", schema = "business_english")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Accessors(chain = true)
-@SelectBeforeUpdate
 public class UserEntity {
 
     @Id
@@ -26,7 +31,7 @@ public class UserEntity {
     private String password;
     @Column(unique = true)
     private String userEmail;
-    private String userHeadico;
+    private String userHeadicon;
     @CreationTimestamp
     private Date userRegisterdate;
     private String userIntro;
@@ -55,7 +60,7 @@ public class UserEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<NoteEntity> notes;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -68,14 +73,12 @@ public class UserEntity {
         return new UserEntity()
                 .setUserId(user.getUserId())
                 .setUserName(user.getUserName())
-                .setPassword(user.getPassword())
                 .setUserEnable(user.getUserEnable())
                 .setUserEmail(user.getUserEmail())
                 .setUserIntro(user.getUserIntro())
                 .setUserRegisterdate(user.getUserRegisterdate())
                 .setUserTelephone(user.getUserTelephone())
-                .setUserHeadico(user.getUserHeadico())
-                .setOrganizations(user.getOrganizations())
+                .setUserHeadicon(user.getUserHeadicon())
                 .setRoles(user.getRoles()
                         .stream().map(role -> new RoleEntity().setRoleId(role.getRoleId()).setRoleName(role.getRoleName())).collect(Collectors.toList()));
     }

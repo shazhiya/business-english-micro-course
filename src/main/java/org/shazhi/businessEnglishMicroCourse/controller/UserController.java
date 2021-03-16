@@ -80,7 +80,7 @@ public class UserController {
 
     @RequestMapping("user/queryHeadIconByUsername")
     public UserEntity queryHeardIcoByUsername(@RequestBody UserEntity user) {
-        return new UserEntity().setUserHeadico(userService.getProfileByUsername(user).getUserHeadico());
+        return new UserEntity().setUserHeadicon(userService.getProfileByUsername(user).getUserHeadicon());
     }
 
     @RequestMapping("auth/giveVerifyCode/{type}")

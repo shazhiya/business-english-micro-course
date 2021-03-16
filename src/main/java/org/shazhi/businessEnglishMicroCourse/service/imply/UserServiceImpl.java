@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public Integer register(UserEntity registerUser) {
         try {
             registerUser
-                    .setUserHeadico(headIco)
+                    .setUserHeadicon(headIco)
                     .setUserEnable(true)
                     .setUserIntro("this is very lazy");
             registerUser.setRoles(new ArrayList<>());

@@ -57,7 +57,7 @@ public class UserManagerServiceImpl implements UserManagerService {
     public Boolean update(UserEntity user) {
         try {
             userManager.save(userManager.findById(user.getUserId()).get()
-                    .setUserHeadico(user.getUserHeadico()))
+                    .setUserHeadicon(user.getUserHeadicon()))
                     .setUserIntro(user.getUserIntro())
                     .setUserTelephone(user.getUserTelephone())
                     .setUserEmail(user.getUserEmail());

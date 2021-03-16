@@ -1,15 +1,21 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.shazhi.businessEnglishMicroCourse.converter.JpaConverterJson;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "comment", schema = "business_english")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Accessors(chain = true)
 public class CommentEntity {
 

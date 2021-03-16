@@ -1,18 +1,18 @@
 package org.shazhi.businessEnglishMicroCourse.util;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Accessors(chain = true)
+@Data
 public class IdUser implements UserDetails {
-    private Integer userId;
+
+    UserEntity userInfo;
     User user;
 
     public IdUser(String username, String password, Boolean userEnable, boolean accountNonExpired, boolean credentialsNonExpired,
@@ -20,17 +20,8 @@ public class IdUser implements UserDetails {
         this.user = new User(username,password,userEnable,accountNonExpired,credentialsNonExpired,accountNonLocked,authorities);
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
     public IdUser(){
 
-    }
-
-    public IdUser setUserId(Integer userId) {
-        this.userId = userId;
-        return this;
     }
 
     @Override

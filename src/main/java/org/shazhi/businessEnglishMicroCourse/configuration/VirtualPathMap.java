@@ -13,7 +13,7 @@ public class VirtualPathMap implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**").addResourceLocations("file:" + path + "img/");
-        registry.addResourceHandler("/headIco/**").addResourceLocations("file:" + path + "headIco/");
+        registry.addResourceHandler("/headIcon/**").addResourceLocations("file:" + path + "headIcon/");
         registry.addResourceHandler("/courseCover/**").addResourceLocations("file:" + path + "courseCover/");
         registry.addResourceHandler("/courseware/**").addResourceLocations("file:" + path + "courseware/");
         registry.addResourceHandler("/auditedData/**").addResourceLocations("file:" + path + "auditedData/");

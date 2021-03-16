@@ -1,15 +1,21 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@EntityListeners(AuditingEntityListener.class)
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "organization", schema = "business_english")
 @Accessors(chain = true)
 public class OrganizationEntity {
@@ -20,6 +26,7 @@ public class OrganizationEntity {
 
     private String organizationName;
     private String organizationDescription;
+    private String phone;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
@@ -30,8 +37,13 @@ public class OrganizationEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
     private List<RoleEntity> roles;
 
-    @CreatedDate
-    private Date  createTime;
+    @CreationTimestamp
+    @Column(columnDefinition = "datetime")
+    private Date createTime;
 
     private String status;
+
+    public OrganizationEntity ignore(){
+        return this.setCreator(this.getCreator().ignoreAttr(this.getCreator()));
+    }
 }

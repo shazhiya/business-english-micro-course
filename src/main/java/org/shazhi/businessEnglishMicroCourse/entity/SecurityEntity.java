@@ -1,15 +1,21 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "security", schema = "business_english")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Accessors(chain = true)
 public class SecurityEntity {
 

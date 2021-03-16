@@ -63,13 +63,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             UserRepository userRepository;
 
             @Override
-            @Transactional
             public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
                 UserEntity userEntity = userRepository.getUserEntityByUserName(userName);
                 try {
                     ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     userEntity.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRoleName())));
-                    return new IdUser(userName, userEntity.getPassword(), userEntity.getUserEnable(), true, true, true, authorities).setUserId(userEntity.getUserId());
+                    return new IdUser(userName, userEntity.getPassword(), userEntity.getUserEnable(), true, true, true, authorities).setUserInfo(userEntity);
                 } catch (Exception e) {
                     return new IdUser(userName, null, false, false, false, false, null);
                 }
