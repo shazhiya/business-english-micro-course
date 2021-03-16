@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "clazz", schema = "business_english")
+@DynamicUpdate
 @Getter
 @Setter
 @NoArgsConstructor

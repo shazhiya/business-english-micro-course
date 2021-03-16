@@ -1,12 +1,12 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "user", schema = "business_english")
+@DynamicUpdate
 @Getter
 @Setter
 @NoArgsConstructor

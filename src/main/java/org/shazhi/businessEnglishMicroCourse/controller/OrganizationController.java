@@ -25,7 +25,7 @@ public class OrganizationController {
     @RequestMapping("applyOrganization")
     public Result applyOrgan(@RequestBody OrganizationEntity apply){
         return organizationService
-                .updateOrganization(apply.setStatus("待审核").setCreator(getUserDetail().getUserInfo()));
+                .insertOrganization(apply.setStatus("待审核").setCreator(getUserDetail().getUserInfo()));
     }
 
     @RequestMapping("load")
@@ -34,6 +34,11 @@ public class OrganizationController {
                 .stream()
                 .map(OrganizationEntity::ignore)
                 .collect(Collectors.toList());
+    }
+
+    @RequestMapping("audit")
+    public Result audit(@RequestBody OrganizationEntity audit){
+        return organizationService.updateOrganization(audit);
     }
 
     private IdUser getUserDetail(){

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.shazhi.businessEnglishMicroCourse.converter.JpaConverterJson;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "note", schema = "business_english")
+@DynamicUpdate
 @Getter
 @Setter
 @NoArgsConstructor
