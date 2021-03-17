@@ -36,8 +36,8 @@ public class UserManagerServiceImpl implements UserManagerService {
             Predicate p = criteriaBuilder.like(root.get("userName"), '%' + query.getUserName() + '%');
             if (query.getUserEnable() != null)
                 p = criteriaBuilder.and(p, criteriaBuilder.equal(root.get("userEnable"), query.getUserEnable()));
-            if (new ArrayList<>(query.getRoles()).get(0).getRoleId() != null)
-                p = criteriaBuilder.and(p, criteriaBuilder.equal(root.join("roles", JoinType.INNER).get("roleId"), new ArrayList<>(query.getRoles()).get(0).getRoleId()));
+//            if (new ArrayList<>(query.getRoles()).get(0).getRoleId() != null)
+//                p = criteriaBuilder.and(p, criteriaBuilder.equal(root.join("roles", JoinType.INNER).get("roleId"), new ArrayList<>(query.getRoles()).get(0).getRoleId()));
             return criteriaQuery
                     .where(p)
                     .groupBy(root.get("userId"))
@@ -59,8 +59,7 @@ public class UserManagerServiceImpl implements UserManagerService {
             userManager.save(userManager.findById(user.getUserId()).get()
                     .setUserHeadicon(user.getUserHeadicon()))
                     .setUserIntro(user.getUserIntro())
-                    .setUserTelephone(user.getUserTelephone())
-                    .setUserEmail(user.getUserEmail());
+                    .setUserTelephone(user.getUserTelephone());
             return true;
         } catch (Exception e) {
             return false;

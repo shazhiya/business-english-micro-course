@@ -1,7 +1,5 @@
 package org.shazhi.businessEnglishMicroCourse.service.imply;
 
-import org.shazhi.businessEnglishMicroCourse.entity.RoleEntity;
-import org.shazhi.businessEnglishMicroCourse.entity.SecurityEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.repository.UserRepository;
 import org.shazhi.businessEnglishMicroCourse.service.UserService;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,8 +34,6 @@ public class UserServiceImpl implements UserService {
                     .setUserHeadicon(headIco)
                     .setUserEnable(true)
                     .setUserIntro("this is very lazy");
-            registerUser.setRoles(new ArrayList<>());
-            registerUser.getRoles().add(new RoleEntity().setRoleId(2));
             registerUser = userRepository.save(registerUser);
             if (registerUser.getUserId() == null) return -1;
             else return 1;
@@ -50,12 +45,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> querySecuritiesByUsername(UserEntity user) {
         Map<String, Object> result = new HashMap<String, Object>();
-        UserEntity query = userRepository.getUserEntityByUserName(user.getUserName());
-        result.put("roles", query.getRoles().stream().map(RoleEntity::getRoleName).collect(Collectors.toList()));
-        result.put("securities", query.getRoles().stream().reduce(new HashSet<String>(), (set, role) -> {
-            set.addAll(role.getSecurities().stream().map(SecurityEntity::getSecurityName).collect(Collectors.toList()));
-            return set;
-        }, (set, role) -> null));
         return result;
     }
 
@@ -63,7 +52,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity getProfileByUsername(UserEntity user) {
         user = userRepository.getProfileByUsername(user.getUserName());
         if (user==null) user = new UserEntity();
-        return UserEntity.ignoreAttr(user);
+        return user.ignoreAttr();
     }
 
     @Override

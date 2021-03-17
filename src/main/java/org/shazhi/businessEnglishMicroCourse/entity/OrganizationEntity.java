@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@DynamicUpdate
 @DynamicUpdate
 @Getter
 @Setter
@@ -27,27 +25,28 @@ public class OrganizationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer organizationId;
-
     private String organizationName;
     private String organizationDescription;
     private String phone;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "creator_id")
-    private UserEntity creator;
-
     private String data;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
-    private List<RoleEntity> roles;
 
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
     private Date createTime;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<UserRoleOrganization> uros;
+
     private String status;
 
     public OrganizationEntity ignore(){
-        return this.setCreator(this.getCreator().ignoreAttr(this.getCreator()));
+        this.uros.forEach(uro->{
+            uro.setOrganization(null);
+            uro.getRole().setUros(null);
+            uro.getUser().setUros(null);
+            uro.getUser().ignoreAttr();
+        });
+        return this;
     }
+
 }

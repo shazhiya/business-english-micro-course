@@ -1,9 +1,9 @@
 package org.shazhi.businessEnglishMicroCourse.service.imply;
 
-import org.hibernate.Session;
-import org.hibernate.ejb.HibernateEntityManager;
 import org.shazhi.businessEnglishMicroCourse.entity.OrganizationEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.RoleEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.UserRoleOrganization;
 import org.shazhi.businessEnglishMicroCourse.repository.OrganizationRepository;
 import org.shazhi.businessEnglishMicroCourse.service.OrganizationService;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
@@ -29,14 +29,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public Result updateOrganization(OrganizationEntity update) {
-        repository.save(repository.getOne(update.getOrganizationId()).setStatus(update.getStatus()));
+        OrganizationEntity persist = repository.getOne(update.getOrganizationId()).setStatus(update.getStatus());
+        repository.saveAndFlush(persist);
         return new Result().setSuccess("操作成功");
     }
 
     @Override
-    public Result insertOrganization(OrganizationEntity insert) {
-        UserEntity user = entityManager.getReference(UserEntity.class,insert.getCreator().getUserId());
-        repository.save(insert.setCreator(user));
+    public Result insertOrganization(OrganizationEntity insert,UserEntity creator) {
+        UserEntity user = entityManager.getReference(UserEntity.class,creator.getUserId());
+        insert = repository.save(insert);
+        entityManager.merge(new UserRoleOrganization()
+                .setOrganization(insert)
+                .setUser(user)
+                .setRole(new RoleEntity()
+                        .setRoleName(insert.getOrganizationName()+"-创建者")));
+
         return new Result().setSuccess();
     }
 

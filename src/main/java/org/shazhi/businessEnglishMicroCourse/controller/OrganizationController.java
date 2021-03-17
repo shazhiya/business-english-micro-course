@@ -1,6 +1,7 @@
 package org.shazhi.businessEnglishMicroCourse.controller;
 
 import org.shazhi.businessEnglishMicroCourse.entity.OrganizationEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.UserRoleOrganization;
 import org.shazhi.businessEnglishMicroCourse.service.OrganizationService;
 import org.shazhi.businessEnglishMicroCourse.util.IdUser;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
@@ -24,16 +25,12 @@ public class OrganizationController {
 
     @RequestMapping("applyOrganization")
     public Result applyOrgan(@RequestBody OrganizationEntity apply){
-        return organizationService
-                .insertOrganization(apply.setStatus("待审核").setCreator(getUserDetail().getUserInfo()));
+        return organizationService.insertOrganization(apply.setStatus("待审核"),getUserDetail().getUserInfo());
     }
 
     @RequestMapping("load")
     public List<OrganizationEntity> load(@RequestBody OrganizationEntity example){
-        return organizationService.load(example)
-                .stream()
-                .map(OrganizationEntity::ignore)
-                .collect(Collectors.toList());
+        return organizationService.load(example).stream().map(OrganizationEntity::ignore).collect(Collectors.toList());
     }
 
     @RequestMapping("audit")

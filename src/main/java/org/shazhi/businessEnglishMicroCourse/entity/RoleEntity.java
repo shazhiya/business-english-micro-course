@@ -1,6 +1,5 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,13 +29,8 @@ public class RoleEntity {
     @JoinTable(name = "role_security", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "security_id")})
     private List<SecurityEntity> securities;
 
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private List<UserEntity> users;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "organization_id")
-    private OrganizationEntity organization;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private List<UserRoleOrganization> uros;
 
     public static RoleEntity ignoreAttr(RoleEntity role) {
         return new RoleEntity()

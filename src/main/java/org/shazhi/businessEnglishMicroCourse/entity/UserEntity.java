@@ -61,26 +61,18 @@ public class UserEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<NoteEntity> notes;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<RoleEntity> roles;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<UserRoleOrganization> uros;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
-    private List<OrganizationEntity> organizations;
-
-    public static UserEntity ignoreAttr(UserEntity user) {
+    public UserEntity ignoreAttr() {
         return new UserEntity()
-                .setUserId(user.getUserId())
-                .setUserName(user.getUserName())
-                .setUserEnable(user.getUserEnable())
-                .setUserEmail(user.getUserEmail())
-                .setUserIntro(user.getUserIntro())
-                .setUserRegisterdate(user.getUserRegisterdate())
-                .setUserTelephone(user.getUserTelephone())
-                .setUserHeadicon(user.getUserHeadicon())
-                .setRoles(user.getRoles()
-                        .stream().map(role -> new RoleEntity().setRoleId(role.getRoleId()).setRoleName(role.getRoleName())).collect(Collectors.toList()));
+                .setUserId(this.getUserId())
+                .setUserName(this.getUserName())
+                .setUserEnable(this.getUserEnable())
+                .setUserEmail(this.getUserEmail())
+                .setUserIntro(this.getUserIntro())
+                .setUserRegisterdate(this.getUserRegisterdate())
+                .setUserTelephone(this.getUserTelephone())
+                .setUserHeadicon(this.getUserHeadicon());
     }
 }
