@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -78,6 +79,11 @@ public class OrganizationServiceImpl implements OrganizationService {
                 entityManager.merge(role);
             }
         }
+
+        if ("delSecurityToRole".equals(type)){
+            repository.delRoleSecurity(uro.getRole().getRoleId(),uro.getRole().getSecurities().get(0).getSecurityId());
+        }
+
 
         return new Result().setSuccess();
     }
