@@ -40,28 +40,28 @@ public class UserEntity {
     @ColumnDefault("true")
     private Boolean userEnable;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
     private List<BulletScreenEntity> bulletScreens;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
     private List<ClazzUserEntity> enrollClazzies;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "commenter")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "commenter")
     private List<CommentEntity> comments;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
     private List<CurriculumEntity> curriculums;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sendUser")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "sendUser")
     private List<MessageEntity> sendMessages;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "targetUser")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "targetUser")
     private List<MessageEntity> acceptMessages;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
     private List<NoteEntity> notes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleOrganization> uros;
 
     public UserEntity ignoreAttr() {

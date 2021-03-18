@@ -37,4 +37,6 @@ file:
 
 default:
   headIco: headIcon/default.jpg
+  role:
+    organizaiton-creator-default-security: 1, 2, 3, 4
 

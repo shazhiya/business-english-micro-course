@@ -31,14 +31,14 @@ public class CurriculumEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum", cascade = CascadeType.ALL)
     private List<ChapterEntity> chapters;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "curriculum")
     private List<ClazzEntity> clazzes;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "curriculum")
     private List<NoteEntity> notes;
 
 }

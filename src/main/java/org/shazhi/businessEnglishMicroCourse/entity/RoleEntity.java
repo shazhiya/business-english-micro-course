@@ -24,12 +24,15 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
     private String roleName;
+    private String tagColor;
 
-    @ManyToMany
-    @JoinTable(name = "role_security", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "security_id")})
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH})
+    @JoinTable(name = "role_security",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "security_id")})
     private List<SecurityEntity> securities;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "role")
     private List<UserRoleOrganization> uros;
 
     public static RoleEntity ignoreAttr(RoleEntity role) {

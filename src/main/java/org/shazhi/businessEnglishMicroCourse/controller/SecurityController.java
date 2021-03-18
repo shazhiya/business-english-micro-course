@@ -1,6 +1,7 @@
 package org.shazhi.businessEnglishMicroCourse.controller;
 
 import org.shazhi.businessEnglishMicroCourse.entity.RoleEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.SecurityEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.service.SecurityService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,11 @@ public class SecurityController {
     public List<RoleEntity> allRole() {
         return securityService
                 .getAllRole();
+    }
+
+    @RequestMapping("allSecurity")
+    public List<SecurityEntity> allSecurity(){
+        return securityService.getAllSecurity();
     }
 
     @RequestMapping("setEnable")

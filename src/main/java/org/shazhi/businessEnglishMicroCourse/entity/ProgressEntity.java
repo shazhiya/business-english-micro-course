@@ -24,11 +24,11 @@ public class ProgressEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer progressId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseware_id")
     private CoursewareEntity courseware;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "clazz_user_id")
     private ClazzUserEntity clazzUser;
 

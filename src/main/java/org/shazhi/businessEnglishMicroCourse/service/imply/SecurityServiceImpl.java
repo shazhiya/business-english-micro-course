@@ -1,6 +1,7 @@
 package org.shazhi.businessEnglishMicroCourse.service.imply;
 
 import org.shazhi.businessEnglishMicroCourse.entity.RoleEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.SecurityEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.repository.SecurityRepository;
 import org.shazhi.businessEnglishMicroCourse.service.SecurityService;
@@ -32,5 +33,14 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public Boolean setUserEnable(UserEntity user) {
         return securityRepository.setEnable(user.getUserEnable(), user.getUserId()) == 1;
+    }
+
+    @Override
+    public List<SecurityEntity> getAllSecurity() {
+        return securityRepository
+                .getAllSecurity()
+                .stream()
+                .map(SecurityEntity::ignore)
+                .collect(Collectors.toList());
     }
 }

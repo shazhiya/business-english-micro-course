@@ -6,10 +6,12 @@ import org.shazhi.businessEnglishMicroCourse.service.OrganizationService;
 import org.shazhi.businessEnglishMicroCourse.util.IdUser;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,12 +32,17 @@ public class OrganizationController {
 
     @RequestMapping("load")
     public List<OrganizationEntity> load(@RequestBody OrganizationEntity example){
-        return organizationService.load(example).stream().map(OrganizationEntity::ignore).collect(Collectors.toList());
+        return organizationService.load(example);
     }
 
     @RequestMapping("audit")
     public Result audit(@RequestBody OrganizationEntity audit){
         return organizationService.updateOrganization(audit);
+    }
+
+    @RequestMapping("updateRole/{type}")
+    public Result updateRole(@RequestBody UserRoleOrganization uro, @PathVariable String type){
+        return organizationService.updateRole(uro,type);
     }
 
     private IdUser getUserDetail(){

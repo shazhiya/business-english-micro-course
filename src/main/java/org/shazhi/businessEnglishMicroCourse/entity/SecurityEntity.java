@@ -25,8 +25,16 @@ public class SecurityEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer securityId;
     private String securityName;
+    private String scope;
 
     @ManyToMany(mappedBy = "securities")
     @JsonIgnore
     private List<RoleEntity> roleSecurities;
+
+    public SecurityEntity ignore(){
+        return new SecurityEntity()
+                .setSecurityId(securityId)
+                .setSecurityName(getSecurityName())
+                .setScope(scope);
+    }
 }

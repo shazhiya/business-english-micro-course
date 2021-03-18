@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,19 +35,9 @@ public class OrganizationEntity {
     @Column(columnDefinition = "datetime")
     private Date createTime;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER, mappedBy = "organization")
     private List<UserRoleOrganization> uros;
 
     private String status;
-
-    public OrganizationEntity ignore(){
-        this.uros.forEach(uro->{
-            uro.setOrganization(null);
-            uro.getRole().setUros(null);
-            uro.getUser().setUros(null);
-            uro.getUser().ignoreAttr();
-        });
-        return this;
-    }
 
 }
