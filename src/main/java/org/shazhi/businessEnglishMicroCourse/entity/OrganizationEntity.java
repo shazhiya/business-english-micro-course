@@ -1,5 +1,6 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class OrganizationEntity {
     private String organizationDescription;
     private String phone;
     private String data;
-
+    private String status;
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
     private Date createTime;
@@ -38,6 +38,18 @@ public class OrganizationEntity {
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER, mappedBy = "organization")
     private List<UserRoleOrganization> uros;
 
-    private String status;
+    @JSONField(serialize = false)
+    public UserEntity getCreator(){
+        UserEntity creator = null;
+        for (UserRoleOrganization uro : this.getUros()) {
+            if (uro.getRole()==null) continue;
+            if (uro.getRole().getRoleName().equals(this.getOrganizationName()+"-创建者")) {
+                creator = uro.getUser();
+            }
+        }
+
+        return creator;
+    }
+
 
 }

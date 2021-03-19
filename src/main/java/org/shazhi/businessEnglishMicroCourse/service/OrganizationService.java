@@ -15,4 +15,6 @@ public interface OrganizationService {
     List<OrganizationEntity> load(OrganizationEntity example);
 
     Result updateRole(UserRoleOrganization uro, String type);
+
+    Result inviteMember(UserRoleOrganization uro);
 }

@@ -1,6 +1,5 @@
 package org.shazhi.businessEnglishMicroCourse.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +22,7 @@ public class UserRoleOrganization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer uroId;
+    private String status;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "user_id")

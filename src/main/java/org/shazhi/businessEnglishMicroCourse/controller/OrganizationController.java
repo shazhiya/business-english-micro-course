@@ -45,6 +45,11 @@ public class OrganizationController {
         return organizationService.updateRole(uro,type);
     }
 
+    @RequestMapping("inviteMember")
+    public Result invite(@RequestBody UserRoleOrganization uro){
+        return organizationService.inviteMember(uro);
+    }
+
     private IdUser getUserDetail(){
         return (IdUser) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }

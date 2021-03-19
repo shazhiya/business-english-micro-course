@@ -3,7 +3,6 @@ package org.shazhi.businessEnglishMicroCourse.service.imply;
 import org.shazhi.businessEnglishMicroCourse.entity.*;
 import org.shazhi.businessEnglishMicroCourse.repository.OrganizationRepository;
 import org.shazhi.businessEnglishMicroCourse.service.OrganizationService;
-import org.shazhi.businessEnglishMicroCourse.util.IList;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -85,6 +83,25 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
 
 
+        return new Result().setSuccess();
+    }
+
+    @Override
+    public Result inviteMember(UserRoleOrganization uro) {
+        OrganizationEntity organ = repository.getOne(uro.getOrganization().getOrganizationId());
+
+        UserRoleOrganization beInviter = new UserRoleOrganization()
+                .setOrganization(organ)
+                .setStatus("待接受邀请")
+                .setUser(entityManager.getReference(UserEntity.class,uro.getUser().getUserId()));
+        MessageEntity organization_invite = new MessageEntity()
+                .setMessageContent(organ.getCreator().getUserName() + " 邀请您加入 " + organ.getOrganizationName())
+                .setOptions(organ.getOrganizationId() + "")
+                .setSendUser(organ.getCreator())
+                .setTargetUser(uro.getUser())
+                .setType("organization invite");
+        entityManager.merge(beInviter);
+        entityManager.merge(organization_invite);
         return new Result().setSuccess();
     }
 

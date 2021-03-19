@@ -26,7 +26,7 @@ public class RoleEntity {
     private String roleName;
     private String tagColor;
 
-    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH})
+    @ManyToMany(cascade = {CascadeType.DETACH})
     @JoinTable(name = "role_security",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "security_id")})
