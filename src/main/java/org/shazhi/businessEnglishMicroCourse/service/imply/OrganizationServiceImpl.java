@@ -72,7 +72,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         if ("addSecurityToRole".equals(type)){
             RoleEntity role = entityManager.find(RoleEntity.class, uro.getRole().getRoleId());
-            if (role.getSecurities().stream().noneMatch(securityEntity -> securityEntity.getSecurityId()==uro.getRole().getSecurities().get(0).getSecurityId())){
+            if (role.getSecurities().stream().noneMatch(securityEntity -> securityEntity.getSecurityId().equals(uro.getRole().getSecurities().get(0).getSecurityId()))){
                 role.getSecurities().add(entityManager.find(SecurityEntity.class,uro.getRole().getSecurities().get(0).getSecurityId()));
                 entityManager.merge(role);
             }
@@ -99,6 +99,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .setOptions(organ.getOrganizationId() + "")
                 .setSendUser(organ.getCreator())
                 .setTargetUser(uro.getUser())
+                .setStatus("未读")
                 .setType("organization invite");
         entityManager.merge(beInviter);
         entityManager.merge(organization_invite);

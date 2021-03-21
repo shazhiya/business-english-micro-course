@@ -68,7 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 UserEntity userEntity = userRepository.getUserEntityByUserName(userName);
                 try {
                     ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    userEntity.getUros().forEach(uro -> authorities.add(new SimpleGrantedAuthority(uro.getRole().getRoleName())));
+                    userEntity.getUros().forEach(uro -> {
+                        if (uro.getRole()!=null)
+                            authorities.add(new SimpleGrantedAuthority(uro.getRole().getRoleName()));
+                    });
                     return new IdUser(userName, userEntity.getPassword(), userEntity.getUserEnable(), true, true, true, authorities).setUserInfo(userEntity);
                 } catch (Exception e) {
                     return new IdUser(userName, null, false, false, false, false, null);
