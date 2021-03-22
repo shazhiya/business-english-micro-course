@@ -1,5 +1,6 @@
 package org.shazhi.businessEnglishMicroCourse.service;
 
+import org.shazhi.businessEnglishMicroCourse.entity.MessageEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.OrganizationEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.UserRoleOrganization;
@@ -17,4 +18,10 @@ public interface OrganizationService {
     Result updateRole(UserRoleOrganization uro, String type);
 
     Result inviteMember(UserRoleOrganization uro);
+
+    Result react(MessageEntity mess);
+
+    Result delMember(UserRoleOrganization uro);
+
+    Result assignRole(UserRoleOrganization uro);
 }

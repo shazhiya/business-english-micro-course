@@ -63,6 +63,12 @@ public class UserEntity {
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleOrganization> uros;
 
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "self")
+    private List<ContactsEntity> selfList;
+
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "contactor")
+    private List<ContactsEntity> contactors;
+
     public UserEntity ignoreAttr() {
         return new UserEntity()
                 .setUserId(this.getUserId())

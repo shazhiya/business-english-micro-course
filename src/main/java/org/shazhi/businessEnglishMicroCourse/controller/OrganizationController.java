@@ -1,6 +1,8 @@
 package org.shazhi.businessEnglishMicroCourse.controller;
 
+import org.shazhi.businessEnglishMicroCourse.entity.MessageEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.OrganizationEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.UserRoleOrganization;
 import org.shazhi.businessEnglishMicroCourse.service.OrganizationService;
 import org.shazhi.businessEnglishMicroCourse.util.IdUser;
@@ -11,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.relation.Role;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("organization")
@@ -48,6 +48,21 @@ public class OrganizationController {
     @RequestMapping("inviteMember")
     public Result invite(@RequestBody UserRoleOrganization uro){
         return organizationService.inviteMember(uro);
+    }
+
+    @RequestMapping("reactInvitation")
+    public Result reactInvitation(@RequestBody MessageEntity mess){
+        return organizationService.react(mess);
+    }
+
+    @RequestMapping("delMember")
+    public Result delMember(@RequestBody UserRoleOrganization uro){
+        return organizationService.delMember(uro);
+    }
+
+    @RequestMapping("assignRole")
+    public Result assignRole(@RequestBody UserRoleOrganization uro){
+        return organizationService.assignRole(uro);
     }
 
     private IdUser getUserDetail(){

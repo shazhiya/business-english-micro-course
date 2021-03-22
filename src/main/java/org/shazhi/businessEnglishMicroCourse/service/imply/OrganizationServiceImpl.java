@@ -65,9 +65,14 @@ public class OrganizationServiceImpl implements OrganizationService {
             uro.setOrganization(persist);
             entityManager.merge(uro);
         }
-
         if ("delRole".equals(type)){
-            entityManager.remove(entityManager.find(RoleEntity.class,uro.getRole().getRoleId()));
+            RoleEntity role = entityManager.find(RoleEntity.class,uro.getRole().getRoleId());
+            role.getUros().forEach(rUro->{
+                if (rUro.getUser()!=null){
+                    entityManager.merge(rUro.setRole(null));
+                }
+            });
+            repository.delRole(role.getRoleId());
         }
 
         if ("addSecurityToRole".equals(type)){
@@ -103,6 +108,31 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .setType("organization invite");
         entityManager.merge(beInviter);
         entityManager.merge(organization_invite);
+        return new Result().setSuccess();
+    }
+
+    @Override
+    public Result react(MessageEntity mess) {
+        UserRoleOrganization uro = repository.findUro(mess.getTargetUser().getUserId(),Integer.valueOf(mess.getOptions()));
+        uro.setStatus(mess.getStatus());
+        entityManager.merge(mess);
+        MessageEntity message = entityManager.find(MessageEntity.class,mess.getMessageId());
+        message.setStatus(mess.getStatus());
+        return new Result().setSuccess();
+    }
+
+    @Override
+    public Result delMember(UserRoleOrganization uro) {
+        repository.deleteMember(uro.getUser().getUserId(),uro.getOrganization().getOrganizationId());
+        return new Result().setSuccess();
+    }
+
+    @Override
+    public Result assignRole(UserRoleOrganization uro) {
+        UserRoleOrganization persist = repository.findUro(uro.getUser().getUserId(),uro.getOrganization().getOrganizationId());
+        RoleEntity roleEntity = entityManager.find(RoleEntity.class, uro.getRole().getRoleId());
+        persist.setRole(roleEntity);
+        entityManager.merge(persist);
         return new Result().setSuccess();
     }
 
