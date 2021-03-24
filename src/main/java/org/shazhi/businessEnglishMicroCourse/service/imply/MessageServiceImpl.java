@@ -55,7 +55,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageEntity> loadHistory(MessageEntity history) {
-        return messageRepository.loadHistory(history.getTargetUser().getUserId(),history.getSendUser().getUserId(),history.getSendUser(), PageRequest.of(1,10));
+        return messageRepository.loadHistory(history.getTargetUser().getUserId(),history.getSendUser().getUserId(),history.getMessageSendTime(), PageRequest.of(1,10));
     }
 
     @Override

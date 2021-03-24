@@ -24,8 +24,8 @@ public interface MessageRepository extends JpaRepository<MessageEntity,Integer>,
     @Query("update MessageEntity mess set mess.status = '已读' where mess.targetUser.userId =:tid and mess.sendUser.userId=:sid and mess.messageSendTime <= :stime")
     Integer markRead(@Param("tid") Integer userId,@Param("sid") Integer userId1,@Param("stime") Timestamp messageSendTime);
 
-    @Query("from MessageEntity mess where mess.targetUser.userId =:tid and mess.sendUser.userId=:sid and mess.messageSendTime <= :stime")
-    List<MessageEntity> loadHistory(Integer userId, Integer userId1, UserEntity sendUser, PageRequest page);
+    @Query("from MessageEntity mess where ((mess.targetUser.userId =:tid and mess.sendUser.userId=:sid) or (mess.targetUser.userId =:sid and mess.sendUser.userId=:tid)) and mess.messageSendTime <= :stime")
+    List<MessageEntity> loadHistory(@Param("tid") Integer userId,@Param("sid") Integer userId1,@Param("stime") Timestamp sendTime, PageRequest page);
 
     @Query("from ContactsEntity con where con.self.userId =:sid and con.contactor.userId = :cid")
     ContactsEntity findContacts(@Param("sid") Integer userId,@Param("cid") Integer userId1);
