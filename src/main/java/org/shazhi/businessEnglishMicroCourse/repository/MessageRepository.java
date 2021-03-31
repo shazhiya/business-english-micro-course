@@ -23,9 +23,12 @@ public interface  MessageRepository extends JpaRepository<MessageEntity,Integer>
     @Query("update MessageEntity mess set mess.status = '已读' where mess.targetUser.userId =:tid and mess.sendUser.userId=:sid and mess.messageSendTime <= :stime")
     Integer markRead(@Param("tid") Integer userId,@Param("sid") Integer userId1,@Param("stime") Timestamp messageSendTime);
 
-    @Query("from MessageEntity mess where ((mess.targetUser.userId =:tid and mess.sendUser.userId=:sid) or (mess.targetUser.userId =:sid and mess.sendUser.userId=:tid)) and mess.messageSendTime <= :stime")
+    @Query("from MessageEntity mess where ((mess.targetUser.userId =:tid and mess.sendUser.userId=:sid) or (mess.targetUser.userId =:sid and mess.sendUser.userId=:tid)) and mess.messageSendTime <= :stime order by mess.messageSendTime desc")
     List<MessageEntity> loadHistory(@Param("tid") Integer userId,@Param("sid") Integer userId1,@Param("stime") Timestamp sendTime, Pageable page);
 
     @Query("from ContactsEntity con where con.self.userId =:sid and con.contactor.userId = :cid")
     ContactsEntity findContacts(@Param("sid") Integer userId,@Param("cid") Integer userId1);
+
+    @Query("from MessageEntity mess where mess.sendUser.userId=:sid and mess.targetUser.userId=:tid order by mess.messageSendTime desc")
+    MessageEntity lastMessage(@Param("sid") Integer userId,@Param("tid") Integer userId1);
 }

@@ -115,7 +115,7 @@ public class FileController {
 
         }
 
-        Long currentPartIndex = startByte / coursewareEntity.getFragmentSize();
+        long currentPartIndex = startByte / coursewareEntity.getFragmentSize();
         if (endByte >= (currentPartIndex + 1) * coursewareEntity.getFragmentSize()) {
             endByte = (currentPartIndex + 1) * coursewareEntity.getFragmentSize() - 1;
         }
@@ -130,9 +130,6 @@ public class FileController {
         String fileName = coursewareEntity.getCoursewareName();
         //文件类型
         String contentType = request.getServletContext().getMimeType(fileName);
-
-        byte[] fileNameBytes = fileName.getBytes(StandardCharsets.UTF_8);
-        fileName = new String(fileNameBytes, 0, fileNameBytes.length, StandardCharsets.ISO_8859_1);
 
         //各种响应头设置
         //支持断点续传，获取部分字节内容：
@@ -151,11 +148,10 @@ public class FileController {
         // Content-Range，格式为：[要下载的开始位置]-[结束位置]/[文件总大小]
         response.setHeader("Content-Range", "bytes " + startByte + "-" + endByte + "/" + coursewareEntity.getTotalSize());
 
-        BufferedOutputStream outputStream = null;
+        BufferedOutputStream outputStream;
         //已传送数据大小
         long transmitted = 0;
         startByte %= coursewareEntity.getFragmentSize();
-        endByte %= coursewareEntity.getFragmentSize();
 
         try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
             outputStream = new BufferedOutputStream(response.getOutputStream());

@@ -31,6 +31,11 @@ public class MessageController {
         return messageService.loadHistory(history);
     }
 
+    @RequestMapping("last")
+    public MessageEntity last(@RequestBody MessageEntity last){
+        return messageService.loadLastMessage(last);
+    }
+
     @RequestMapping("send")
     public Result sendMessage(@RequestBody MessageEntity messageEntity){
         return messageService.sendMessage(messageEntity);

@@ -20,4 +20,5 @@ public interface MessageService {
 
     Result sendMessage(MessageEntity messageEntity);
 
+    MessageEntity loadLastMessage(MessageEntity last);
 }
