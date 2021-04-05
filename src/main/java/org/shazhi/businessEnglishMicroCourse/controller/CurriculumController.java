@@ -2,6 +2,7 @@ package org.shazhi.businessEnglishMicroCourse.controller;
 
 import org.shazhi.businessEnglishMicroCourse.entity.CurriculumEntity;
 import org.shazhi.businessEnglishMicroCourse.service.CurriculumService;
+import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class CurriculumController {
 
     @RequestMapping("create/{type}")
     public Boolean create(@RequestBody CurriculumEntity curriculum, @PathVariable String type) {
-        if (type.equals("savaTemporarily")||type.equals("audited")){
+        if (type.equals("saveTemporarily")||type.equals("audited")){
             curriculum.setCurriculumStatus(type);
         }else {
             return false;
@@ -36,6 +37,16 @@ public class CurriculumController {
     @RequestMapping("all")
     public List<CurriculumEntity> all() {
         return curriculumService.getAll();
+    }
+
+    @RequestMapping("load")
+    public List<CurriculumEntity> load(@RequestBody CurriculumEntity course){
+        return curriculumService.load(course);
+    }
+
+    @RequestMapping("change/{type}")
+    public Result dispose(@RequestBody CurriculumEntity curriculum, @PathVariable String type){
+        return curriculumService.changeStatus(curriculum,type);
     }
 
     @RequestMapping("search/{type}/{start}/{size}")

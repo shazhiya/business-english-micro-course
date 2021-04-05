@@ -48,7 +48,7 @@ public class UserEntity {
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "commenter")
     private List<CommentEntity> comments;
 
-    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "creator")
     private List<CurriculumEntity> curriculums;
 
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "sendUser")
