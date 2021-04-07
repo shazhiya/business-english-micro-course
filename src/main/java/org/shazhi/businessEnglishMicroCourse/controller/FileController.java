@@ -80,7 +80,7 @@ public class FileController {
         }
 
         if (coursewareEntity == null) {
-            // todo
+            // Todo
             return;
         }
 
@@ -123,7 +123,7 @@ public class FileController {
         long contentLength = endByte - startByte + 1;
 
         // currentFile
-        File file = new File(path + coursewareEntity.getCoursewarePath() + "\\" + coursewareEntity.getCoursewareName() + ".part." + currentPartIndex);
+        File file = new File(path + coursewareEntity.getCoursewarePath() + ".part." + currentPartIndex);
 
         //文件名
         String fileName = coursewareEntity.getCoursewareName();
