@@ -41,6 +41,9 @@ public class OrganizationEntity {
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "organization")
     private List<CurriculumEntity> curriculums;
 
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "organization")
+    private List<ClazzEntity> classes;
+
     @JSONField(serialize = false)
     public UserEntity getCreator(){
         UserEntity creator = null;

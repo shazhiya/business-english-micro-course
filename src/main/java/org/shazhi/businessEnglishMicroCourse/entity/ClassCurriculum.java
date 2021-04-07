@@ -8,28 +8,28 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "batch", schema = "business_english")
+@Table(name = "class_Curriculum", schema = "business_english")
 @DynamicUpdate
 @Getter
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-public class BatchEntity {
+public class ClassCurriculum {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer batchId;
-    private String batchName;
-    @Column(name = "batch_starttime")
-    private Timestamp batchStartTime;
-    @Column(name = "batch_endtime")
-    private Timestamp batchEndTime;
+    private Integer id;
+    private String status;
 
-    @OneToMany
-    private List<ClazzEntity> clazzesByBatchId;
+    @ManyToOne
+    @JoinColumn(name = "clazz_id")
+    private ClazzEntity clazz;
+
+    @ManyToOne
+    @JoinColumn(name = "curriculum_id")
+    private CurriculumEntity curriculum;
+
 }

@@ -31,9 +31,6 @@ public class CurriculumEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum", cascade = CascadeType.ALL)
     private List<ChapterEntity> chapters;
 
-    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "curriculum")
-    private List<ClazzEntity> clazzes;
-
     @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity creator;
@@ -44,5 +41,8 @@ public class CurriculumEntity {
 
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "curriculum")
     private List<NoteEntity> notes;
+
+    @OneToMany(mappedBy = "curriculum")
+    private List<ClassCurriculum> cc;
 
 }

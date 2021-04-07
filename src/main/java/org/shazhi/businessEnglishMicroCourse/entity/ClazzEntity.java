@@ -26,13 +26,12 @@ public class ClazzEntity {
     private String clazzName;
     private Integer clazzDescription;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "batch_id")
-    private BatchEntity batch;
+    @OneToMany(mappedBy = "clazz",cascade = CascadeType.ALL)
+    private List<ClassCurriculum> ccs;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "curriculum_id")
-    private CurriculumEntity curriculum;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "organization_id")
+    private OrganizationEntity organization;
 
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "clazz")
     private List<ClazzUserEntity> clazzUsers;
