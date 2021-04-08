@@ -1,6 +1,7 @@
 package org.shazhi.businessEnglishMicroCourse.controller;
 
 import org.shazhi.businessEnglishMicroCourse.entity.ClazzEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.ClazzUserEntity;
 import org.shazhi.businessEnglishMicroCourse.service.ClassService;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,19 @@ public class ClassController {
         return classService.load(clazz);
     }
 
+    @RequestMapping("change")
+    public Result change(@RequestBody ClazzEntity clazz){
+        return classService.change(clazz);
+    }
+
+    @RequestMapping("saveCU")
+    public Result saveCU(@RequestBody ClazzUserEntity cu){
+        return classService.saveCU(cu);
+    }
+
+    @RequestMapping("changeCU")
+    public Result changeCU(@RequestBody ClazzUserEntity cu){
+        return classService.changeCU(cu);
+    }
 
 }

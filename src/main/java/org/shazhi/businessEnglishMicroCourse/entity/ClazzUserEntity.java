@@ -23,6 +23,7 @@ public class ClazzUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer clazzUserId;
+    private String status;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "clazz_id")

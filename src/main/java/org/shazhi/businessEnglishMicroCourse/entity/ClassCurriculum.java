@@ -23,7 +23,7 @@ public class ClassCurriculum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "clazz_id")
     private ClazzEntity clazz;
 
