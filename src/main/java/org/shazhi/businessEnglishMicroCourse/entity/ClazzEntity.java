@@ -24,7 +24,9 @@ public class ClazzEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer clazzId;
     private String clazzName;
-    private Integer clazzDescription;
+    private String clazzLogo;
+    private String clazzDescription;
+    private String status;
 
     @OneToMany(mappedBy = "clazz",cascade = CascadeType.ALL)
     private List<ClassCurriculum> ccs;
@@ -35,6 +37,5 @@ public class ClazzEntity {
 
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "clazz")
     private List<ClazzUserEntity> clazzUsers;
-
 
 }

@@ -22,7 +22,6 @@ public class ClassCurriculum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String status;
 
     @ManyToOne
     @JoinColumn(name = "clazz_id")
