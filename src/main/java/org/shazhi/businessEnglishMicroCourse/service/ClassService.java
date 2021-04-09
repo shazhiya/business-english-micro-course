@@ -16,4 +16,6 @@ public interface ClassService {
     Result saveCU(ClazzUserEntity cu);
 
     Result changeCU(ClazzUserEntity cu);
+
+    List<ClazzEntity> search(Integer size, Integer start, String type, ClazzEntity clazz);
 }

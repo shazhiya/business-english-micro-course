@@ -4,6 +4,7 @@ import org.shazhi.businessEnglishMicroCourse.entity.ClazzEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.ClazzUserEntity;
 import org.shazhi.businessEnglishMicroCourse.service.ClassService;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,4 +46,9 @@ public class ClassController {
         return classService.changeCU(cu);
     }
 
+    @RequestMapping("search/{type}/{start}/{size}")
+    public List<ClazzEntity> search(@PathVariable Integer size, @PathVariable Integer start, @PathVariable String type,@RequestBody ClazzEntity clazz){
+        List<ClazzEntity> searches = classService.search(size, start, type, clazz);
+        return searches;
+    }
 }

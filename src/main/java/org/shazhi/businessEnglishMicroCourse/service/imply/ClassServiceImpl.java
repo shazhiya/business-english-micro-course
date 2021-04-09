@@ -6,6 +6,8 @@ import org.shazhi.businessEnglishMicroCourse.repository.ClassRepository;
 import org.shazhi.businessEnglishMicroCourse.service.ClassService;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,5 +58,10 @@ public class ClassServiceImpl implements ClassService {
         cu = em.find(cu.getClass(),cu.getClazzUserId()).setStatus(cu.getStatus());
         em.persist(cu);
         return new Result().setSuccess();
+    }
+
+    @Override
+    public List<ClazzEntity> search(Integer size, Integer start, String type, ClazzEntity clazz) {
+        return classRepository.findAll(Example.of(clazz), PageRequest.of(start,size)).getContent();
     }
 }
