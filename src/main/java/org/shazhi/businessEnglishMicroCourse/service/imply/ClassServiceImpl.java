@@ -7,7 +7,6 @@ import org.shazhi.businessEnglishMicroCourse.service.ClassService;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public Result save(ClazzEntity clazz) {
-        clazz.getCcs().forEach(cc->{
-            cc.setClazz(clazz);
-        });
+        clazz.getCcs().forEach(cc-> cc.setClazz(clazz));
         classRepository.saveAndFlush(clazz);
         return new Result().setSuccess();
     }

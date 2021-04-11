@@ -25,11 +25,11 @@ public class ClazzUserEntity {
     private Integer clazzUserId;
     private String status;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "clazz_id")
     private ClazzEntity clazz;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
