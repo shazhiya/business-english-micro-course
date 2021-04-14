@@ -29,7 +29,7 @@ public class ClazzUserEntity {
     @JoinColumn(name = "clazz_id")
     private ClazzEntity clazz;
 
-    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 

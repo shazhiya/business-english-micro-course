@@ -61,4 +61,9 @@ public class ClassServiceImpl implements ClassService {
     public List<ClazzEntity> search(Integer size, Integer start, String type, ClazzEntity clazz) {
         return classRepository.findAll(Example.of(clazz), PageRequest.of(start,size)).getContent();
     }
+
+    @Override
+    public List<ClazzEntity> loadMyClasses(ClazzUserEntity cu) {
+        return classRepository.loadMyClasses(cu.getUser().getUserId());
+    }
 }

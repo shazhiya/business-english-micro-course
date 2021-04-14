@@ -2,6 +2,7 @@ package org.shazhi.businessEnglishMicroCourse.controller;
 
 import org.shazhi.businessEnglishMicroCourse.entity.ClazzEntity;
 import org.shazhi.businessEnglishMicroCourse.entity.ClazzUserEntity;
+import org.shazhi.businessEnglishMicroCourse.entity.UserEntity;
 import org.shazhi.businessEnglishMicroCourse.service.ClassService;
 import org.shazhi.businessEnglishMicroCourse.util.Result;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,5 +51,10 @@ public class ClassController {
     public List<ClazzEntity> search(@PathVariable Integer size, @PathVariable Integer start, @PathVariable String type,@RequestBody ClazzEntity clazz){
         List<ClazzEntity> searches = classService.search(size, start, type, clazz);
         return searches;
+    }
+
+    @RequestMapping("loadMyClasses")
+    public List<ClazzEntity> loadMyClazz(@RequestBody ClazzUserEntity cu){
+        return classService.loadMyClasses(cu);
     }
 }

@@ -18,4 +18,6 @@ public interface ClassService {
     Result changeCU(ClazzUserEntity cu);
 
     List<ClazzEntity> search(Integer size, Integer start, String type, ClazzEntity clazz);
+
+    List<ClazzEntity> loadMyClasses(ClazzUserEntity cu);
 }
