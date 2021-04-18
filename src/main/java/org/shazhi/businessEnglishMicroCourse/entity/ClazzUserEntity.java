@@ -33,7 +33,4 @@ public class ClazzUserEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "clazzUser")
-    private List<ProgressEntity> progresses;
-
 }

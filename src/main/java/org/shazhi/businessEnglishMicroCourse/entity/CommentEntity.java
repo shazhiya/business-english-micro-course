@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.shazhi.businessEnglishMicroCourse.converter.JpaConverterJson;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,26 +26,22 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
     private String commentContent;
+    private String type;
+    @CreationTimestamp
+    private Date createdTime;
 
-    @Convert(converter = JpaConverterJson.class)
-    private Object commentDetail;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity commenter;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "courseware_id")
-    private CoursewareEntity courseware;
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chapter_id")
+    private ChapterEntity chapter;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private CommentEntity parent;
 
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "parent")
     private List<CommentEntity> children;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "commenttype_id")
-    private CommentTypeEntity commentType;
 }
