@@ -8,5 +8,5 @@ import java.util.List;
 public interface CommentService {
     Result mark(CommentEntity comment);
 
-    List<CommentEntity> load(CommentEntity comment);
+    List<CommentEntity> load(CommentEntity comment, Integer start);
 }
