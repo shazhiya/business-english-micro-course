@@ -58,7 +58,7 @@ public class UserEntity {
     private List<MessageEntity> acceptMessages;
 
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
-    private List<NoteEntity> notes;
+    private List<NotepadEntity> notepads;
 
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserRoleOrganization> uros;

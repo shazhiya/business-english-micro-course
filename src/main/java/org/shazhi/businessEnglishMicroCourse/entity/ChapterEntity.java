@@ -37,5 +37,8 @@ public class ChapterEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chapter", cascade = CascadeType.ALL)
     private List<CommentEntity> comments;
 
+    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "chapter")
+    private List<NoteEntity> notes;
+
 
 }

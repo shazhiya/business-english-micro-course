@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 import org.shazhi.businessEnglishMicroCourse.converter.JpaConverterJson;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,18 +26,17 @@ public class NoteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noteId;
     private String noteContent;
+    private String status;
 
     @Column(name = "note_writtentime")
+    @CreationTimestamp
     private Timestamp noteWrittenTime;
 
-    @Convert(converter = JpaConverterJson.class)
-    private Object noteDescription;
+    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH})
+    @JoinColumn(name = "notepad_id")
+    NotepadEntity notepad;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "curriculum_id")
-    private CurriculumEntity curriculum;
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chapter_id")
+    private ChapterEntity chapter;
 }

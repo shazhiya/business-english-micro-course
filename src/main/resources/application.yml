@@ -29,7 +29,6 @@ spring:
       max-request-size: -1
 server:
   port: 9090
-#debug: true
 
 file:
   save:

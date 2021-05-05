@@ -39,10 +39,10 @@ public class CurriculumEntity {
     @JoinColumn(name = "organization_id")
     private OrganizationEntity organization;
 
-    @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, mappedBy = "curriculum")
-    private List<NoteEntity> notes;
-
     @OneToMany(mappedBy = "curriculum")
     private List<ClassCurriculum> cc;
+
+    @OneToMany(mappedBy = "curriculum",cascade = CascadeType.DETACH)
+    private List<TaskEntity> tasks;
 
 }
